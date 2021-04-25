@@ -40,6 +40,30 @@ export default NextAuth({
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,
     }),
+    {
+      id: "moneybutton",
+      name: "Money Button",
+      type: "oauth",
+      version: "2.0",
+      scope: "auth.user_identity:read",
+      params: {
+        grant_type: "authorization_code"
+      },
+      accessTokenUrl: "https://www.moneybutton.com/oauth/v1/token",
+      authorizationUrl: "https://www.moneybutton.com/oauth/v1/authorize?response_type=code",
+      profileUrl: "https://www.moneybutton.com/api/v1/auth/user_identity",
+  
+      profile(profile) {
+        return {
+          id: profile.data.attributes.id,
+          name: profile.data.attributes.name
+          // email: profile.email,
+          // image: profile.picture
+        };
+      },
+      clientId: "oauth_identifier",
+      clientSecret: "oauth_secret",
+    }
   ],
   // Database optional. MySQL, Maria DB, Postgres and MongoDB are supported.
   // https://next-auth.js.org/configuration/databases
